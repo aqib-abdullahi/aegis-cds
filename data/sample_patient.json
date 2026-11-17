@@ -1,0 +1,68 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-9941",
+        "name": [{ "given": ["Chinedu"], "family": "Okafor" }],
+        "gender": "male",
+        "birthDate": "1964-05-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-1",
+        "code": {
+          "coding": [{ "system": "http://snomed.info/sct", "code": "38341003", "display": "Hypertension" }]
+        },
+        "clinicalStatus": {
+          "coding": [{ "code": "active" }]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-1",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "314077", "display": "Lisinopril 20 MG Oral Tablet" }]
+        },
+        "authoredOn": "2026-10-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1",
+        "status": "final",
+        "code": {
+          "coding": [{ "system": "http://loinc.org", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }]
+        },
+        "valueQuantity": {
+          "value": 5.8,
+          "unit": "mmol/L"
+        },
+        "effectiveDateTime": "2026-11-17T08:15:00Z"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-2",
+        "status": "final",
+        "code": {
+          "coding": [{ "system": "http://loinc.org", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }]
+        },
+        "valueQuantity": {
+          "value": 1.9,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-11-17T08:15:00Z"
+      }
+    }
+  ]
+}
