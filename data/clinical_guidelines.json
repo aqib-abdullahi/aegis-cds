@@ -1,0 +1,30 @@
+[
+  {
+    "evidence_id": "E-01",
+    "topic": "Hyperkalemia and RAAS Inhibitor Management",
+    "source": "KDIGO Clinical Practice Guideline for Diabetes Management in CKD (2024 Update)",
+    "guideline_version": "KDIGO-2024",
+    "excerpt": "In patients receiving an ACEi or ARB who develop serum potassium > 5.5 mmol/L, evaluate for reversible causes (diet, supplements, hemolysis), obtain a 12-lead ECG, and temporarily reduce or hold the RAAS inhibitor until potassium normalizes."
+  },
+  {
+    "evidence_id": "E-02",
+    "topic": "ACE Inhibitor Creatinine Elevation Thresholds",
+    "source": "ACC/AHA Guideline for the Prevention, Detection, Evaluation, and Management of High Blood Pressure",
+    "guideline_version": "ACC-AHA-HTN",
+    "excerpt": "A serum creatinine increase of up to 30% above baseline after initiating or titrating an ACE inhibitor is expected and acceptable; increases > 30% or acute elevation without a known baseline warrant evaluation for acute kidney injury, volume depletion, or bilateral renal artery stenosis."
+  },
+  {
+    "evidence_id": "E-03",
+    "topic": "Pseudohyperkalemia and Pre-analytical Lab Error",
+    "source": "European Resuscitation Council / Clinical Chemistry Standards",
+    "guideline_version": "ERC-CHEM-2025",
+    "excerpt": "Elevated serum potassium (> 5.5 mmol/L) in an asymptomatic patient without ECG changes should be verified for pre-analytical artifact (specimen hemolysis, prolonged tourniquet application, or delayed centrifugation) before initiating aggressive potassium-lowering therapy."
+  },
+  {
+    "evidence_id": "E-04",
+    "topic": "Lisinopril FDA Prescribing Information — Renal & Electrolyte Warnings",
+    "source": "FDA Drug Label: Lisinopril Oral Tablets (DailyMed)",
+    "guideline_version": "FDA-RX-314077",
+    "excerpt": "Monitor serum potassium and renal function periodically in patients receiving Lisinopril. Risk factors for hyperkalemia include renal insufficiency, diabetes mellitus, and concomitant use of potassium-sparing diuretics or potassium supplements."
+  }
+]

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from google import genai
-from google.genai import types
+from google.genai import errors, types
 from pydantic import BaseModel
 from src.models.clinical_state import (
     ClinicalHypothesis,
@@ -27,10 +27,17 @@ STRICT RULES:
 4. Keep reasoning concise, objective, and focused on clinical mechanisms.
 """
 
-def run_case_synthesis(state: ClinicalState, model_name: str = "gemini-3.8-flash") -> ClinicalState:
+#FALLBACK
+FREE_MODELS = [
+    "gemini-3.8-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.6-flash",
+]
+
+def run_case_synthesis(state: ClinicalState) -> ClinicalState:
     """analyze patient facts in clinicalstate and populates initial hypothesis"""
     if not state.phi_scrubbed:
-        raise RuntimeError("SAFETY BLOCK: cannot send un_scrubberd patient data to LLM")
+        raise RuntimeError("SAFETY BLOCK: cannot send un-scrubberd patient data to LLM")
     
     if not os.getenv("GEMINI_API_KEY"):
         raise RuntimeError("Missing GEMINI_API_KEY environment variable")
@@ -43,17 +50,27 @@ def run_case_synthesis(state: ClinicalState, model_name: str = "gemini-3.8-flash
         f"{[fact.model_dump() for fact in state.patient_facts]}"
     )
     
-    response = client.models.generate_content(
-        model=model_name,
-        contents=patient_summary,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=HypothesisList,
-            temperature=0.1 #low for deterministic clinical reasoning
-        ),
-    )
     
-    parsed = HypothesisList.model_validate_json(response.text)
-    state.initial_hypotheses = parsed.hypotheses
-    return state
+    last_error = None
+    for model_name in FREE_MODELS:
+        try:
+            print(f"[Case Analyst] Trying model: {model_name}...")
+            response = client.models.generate_content(
+                model=model_name,
+                contents=patient_summary,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    response_mime_type="application/json",
+                    response_schema=HypothesisList,
+                    temperature=0.1 #low for deterministic clinical reasoning
+                ),
+            )
+            parsed = HypothesisList.model_validate_json(response.text)
+            state.initial_hypotheses = parsed.hypotheses
+            return state
+        
+        except errors.APIError as err:
+            print("[Case Analystt] {model_name} unavailable ({err.code}), trying fallback")
+            last_error = err
+    
+    raise RuntimeError(f"All free-tier models failed. Last error: {last_error}")

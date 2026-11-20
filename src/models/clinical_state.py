@@ -18,6 +18,14 @@ class ClinicalHypothesis(BaseModel):
     reasoning: str = Field(..., description="Concise clinical explanation grounded in facts")
     supporting_fact_ids: list[str] = Field(..., description="must cite exact fact_ids like ['F-01', F-03]")
     confidence: float = Field(..., ge=0.0, le=1.0, description="confidence scoring between 0.0 and 1.0")
+
+class RetrievedEvidence(BaseModel):
+    """Vetted clinical guideline or drug label excerpt linked to a hypothesis"""
+    evidence_id: str = Field(..., description="Exact ID from the vetted guideline store (e.g., E-01)")
+    source: str = Field(..., description="official guideline or FDA label name")
+    excerpt: str = Field(..., description="exact clinical rule or guidance text")
+    linked_hypothesis_ids: list[str] = Field(..., description="which hypotheses this evidence informs, e.g., ('H-01')")
+    relevance_note: str = Field(..., description="How this guideline applies to the patient's specific values")
     
 class ClinicalState(BaseModel):
     """Shared state object passed between agents"""
@@ -27,3 +35,4 @@ class ClinicalState(BaseModel):
     patient_gender: Optional[str] = None
     patient_facts: list[PatientFact] = Field(default_factory=list)
     initial_hypotheses: list[ClinicalHypothesis] = Field(default_factory=list)
+    retrieved_evidence: list[RetrievedEvidence] = Field(default_factory=list)
